@@ -5,7 +5,7 @@ Created on Wed Apr 24 23:30:26 2024
 @author: fredd
 """
 
-from kanren import var, eq, run, Relation, facts, conde, membero
+from kanren import var, eq, run, Relation, facts, conde, membero, rembero
 hijos=var()
 padres=var()
 abuelos=var()
@@ -65,56 +65,20 @@ def parentescoAbuelo(res, obj):
     return conde([parentescos(aux,obj),parentescos(res,aux)])
 
 
-hijosAbuelo=run(5, tios, parentescoAbuelo(abuelos,"FreddyII"),parentescos(abuelos,tios))
 padresAux=run(2,padres,parentescos(padres,"FreddyII"))
-
-print(hijosAbuelo)
 print(padresAux)
+hijosAbuelo=var()
+hijosAbuelo=run(5, tios, conde([parentescoAbuelo(abuelos,"FreddyII"),
+                                parentescos(abuelos,tios)]
+                               ))
+print(hijosAbuelo)
+
+print(run(0,tios,rembero(padresAux[0], hijosAbuelo, tios))[0])
+tios=run(0,tios,rembero(padresAux[0], hijosAbuelo, tios))[0]
+print(run(5,primos,parentescos(tios,primos)))
 
 
-#XD=run(0, tios, eq("",tios))
-#print(XD)
-
-for i in range(len(hijosAbuelo)):
-    if hijosAbuelo[i]==padresAux[0] or hijosAbuelo[i]==padresAux[1] :
-        print("...")
-    else:
-        print("XD")
-        tiosList.append(hijosAbuelo[i])
-        
-
-print()
-      
-def parentescoTios(res,obj):
-    aux2=var();
-    
-
-
-
-relaciones = ['Ada', 'Bec', 'Cad', 'Dan']
-
-# Definir una variable lógica
-x = var()
-
-# Verificar si "B" está en la lista de relaciones
-esta_presente = membero("B", relaciones)
-
-# Imprimir el resultado
-#print(esta_presente.)
-
-# Encontrar todas las variables que están en la lista de relaciones
-
-resultados = run(5, x, membero(x, relaciones))
-print(resultados)
-
-
-
-
-
-
-
-
-
+print("Mis Primos")
 
 def parentescoTio(res,obj):
     """
@@ -135,6 +99,9 @@ def parentescoTio(res,obj):
     """
     aux1=var()
     return conde([parentescoAbuelo(aux1,obj),parentescos(aux1,res)])
+
+      
+
 
 #print (run(5,z,parentescoTio(hijos, "FreddyII"),parentescos(hijos,z)))
 
@@ -162,5 +129,5 @@ consulta = conde(
 )
 
 # Ejecutar la consulta y mostrar los resultados
-resultados = run(1, hijos, consulta)
+resultados = run(2, x, consulta)
 print(resultados)
