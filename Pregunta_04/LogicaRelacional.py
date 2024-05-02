@@ -77,17 +77,10 @@ def hijosAbuelo (res,obj):
 hijoAbuelo=var()
 print(run(5,hijoAbuelo,hijosAbuelo(hijoAbuelo, "FreddyII")))
 
-tiosRun=run(5,tios,membero(tios, run(5,tios, hijosAbuelo(tios,"FreddyII"))),
-                   neq(tios, padresList[0])
-                           )
+tiosRun=run(5,tios,conde([membero(tios, run(5,tios, hijosAbuelo(tios,"FreddyII"))),
+       neq(tios, padresList[0])])
+              )
 print(tiosRun)
-
-
-#membero(tios, run(4,tios, rembero(run(2, padres, parentescos(padres,"FreddyII"))[0], hijosAbuelo, tios))
-
-# print(run(0,tios,rembero(padres, hijosAbuelo, tios))[0])
-# tios=run(0,tios,rembero(padres, hijosAbuelo, tios))[0]
-
 
 
 print("Mis Primos")
@@ -109,40 +102,11 @@ def parentescoTio(res,obj):
         DESCRIPTION.
 
     """
-    aux1=var()
-    return conde([parentescoAbuelo(aux1,obj),parentescos(aux1,res)])
-
-print(run(5,primos,parentescos(tios,primos)))
-
-
-      
+    
+    return conde([membero(tios, run(5,tios, hijosAbuelo(tios,obj))),
+           neq(tios, padresList[0])])
 
 
-#print (run(5,z,parentescoTio(hijos, "FreddyII"),parentescos(hijos,z)))
+print(run(5,primos,parentescoTio(tios, "FreddyII"),parentescos(tios,primos)))
 
 
-x = var()
-
-# Definir la consulta con conde y un condicional OR
-consulta = conde(
-    [eq(x, 2)],
-    [eq(x, 1)]
-)
-
-# Ejecutar la consulta
-resultados = run(2, x, consulta)
-
-# Imprimir los resultados
-print(resultados)
-
-x = var()
-
-# Definir una consulta con una condición AND
-consulta = conde(
-    [eq(x, 2), eq(x, 3)],  # Esto es falso ya que hijos no puede ser 2 y 3 al mismo tiempo
-    [eq(x, 2), eq(x, 2)]   # Esto es verdadero ya que hijos puede ser 2 y 2 al mismo tiempo
-)
-
-# Ejecutar la consulta y mostrar los resultados
-resultados = run(2, x, consulta)
-print(resultados)
