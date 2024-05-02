@@ -66,16 +66,7 @@ def hijosAbuelo (res,obj):
     aux=var()
     return conde([parentescoAbuelo(aux,obj), parentescos(aux,res)])
     
-# padresAux=run(2,padres,padresHijo(padres,"FreddyII"))
-# print(padresAux)
 
-# hijosAbuelo=run(5, tios, conde([parentescoAbuelo(abuelos,"FreddyII"),
-#                                 parentescos(abuelos,tios)
-#                                 ]
-#                                ))
-
-hijoAbuelo=var()
-print(run(5,hijoAbuelo,hijosAbuelo(hijoAbuelo, "FreddyII")))
 
 tiosRun=run(5,tios,conde([membero(tios, run(5,tios, hijosAbuelo(tios,"FreddyII"))),
        neq(tios, padresList[0])])
