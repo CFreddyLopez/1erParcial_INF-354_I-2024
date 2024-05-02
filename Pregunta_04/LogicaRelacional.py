@@ -5,17 +5,13 @@ Created on Wed Apr 24 23:30:26 2024
 @author: fredd
 """
 
-from kanren import var, eq, run, Relation, facts, conde, membero, rembero
+from kanren import var, eq, run, Relation, facts, conde, membero, rembero, neq
+
 hijos=var()
 padres=var()
 abuelos=var()
 tios=var()
 primos=var()
-
-hijosList=var()
-tiosList=var()
-
-
 
 parentescos=Relation()
 facts(parentescos, 
@@ -45,7 +41,6 @@ print()
 
 #Tios de FreddyII
 print("Mis Tios")
-tiosList=list()
 def parentescoAbuelo(res, obj):
     """
     Parameters
@@ -62,20 +57,37 @@ def parentescoAbuelo(res, obj):
 
     """
     aux = var()
-    return conde([parentescos(aux,obj),parentescos(res,aux)])
+    return conde([parentescos(res,aux),parentescos(aux,obj)])
+
+def padresHijo(res,obj):
+    return conde([parentescos(res,obj)])
+
+def hijosAbuelo (res,obj):
+    aux=var()
+    return conde([parentescoAbuelo(aux,obj), parentescos(aux,res)])
+    
+# padresAux=run(2,padres,padresHijo(padres,"FreddyII"))
+# print(padresAux)
+
+# hijosAbuelo=run(5, tios, conde([parentescoAbuelo(abuelos,"FreddyII"),
+#                                 parentescos(abuelos,tios)
+#                                 ]
+#                                ))
+
+hijoAbuelo=var()
+print(run(5,hijoAbuelo,hijosAbuelo(hijoAbuelo, "FreddyII")))
+
+tiosRun=run(5,tios,membero(tios, run(5,tios, hijosAbuelo(tios,"FreddyII"))),
+                   neq(tios, padresList[0])
+                           )
+print(tiosRun)
 
 
-padresAux=run(2,padres,parentescos(padres,"FreddyII"))
-print(padresAux)
-hijosAbuelo=var()
-hijosAbuelo=run(5, tios, conde([parentescoAbuelo(abuelos,"FreddyII"),
-                                parentescos(abuelos,tios)]
-                               ))
-print(hijosAbuelo)
+#membero(tios, run(4,tios, rembero(run(2, padres, parentescos(padres,"FreddyII"))[0], hijosAbuelo, tios))
 
-print(run(0,tios,rembero(padresAux[0], hijosAbuelo, tios))[0])
-tios=run(0,tios,rembero(padresAux[0], hijosAbuelo, tios))[0]
-print(run(5,primos,parentescos(tios,primos)))
+# print(run(0,tios,rembero(padres, hijosAbuelo, tios))[0])
+# tios=run(0,tios,rembero(padres, hijosAbuelo, tios))[0]
+
 
 
 print("Mis Primos")
@@ -99,6 +111,9 @@ def parentescoTio(res,obj):
     """
     aux1=var()
     return conde([parentescoAbuelo(aux1,obj),parentescos(aux1,res)])
+
+print(run(5,primos,parentescos(tios,primos)))
+
 
       
 
