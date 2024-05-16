@@ -19,17 +19,17 @@ with open(archivo_csv, 'r') as archivo:
         linea = linea.strip()
         valores = linea.split(',')
         dato_concatenado=[]
+        indice_c=0
         registro = []
         for indice, dato in enumerate(valores):
             if '"' in dato:
-                
-                dato1 = valores[indice].replace('"', "")
-                if '"' in valores[indice+1]:
-                    dato2 = valores[indice+1].replace('"', "")
-                    nuevo_dato=dato1+"."+dato2
+                dato_concatenado.append(valores[indice].replace('"', ""))
+                indice_c=indice_c+1
+                if indice_c==2:
+                    indice_c=0
+                    nuevo_dato=dato_concatenado[0]+"."+dato_concatenado[1]
                     registro.append(nuevo_dato)
-                else:
-                    registro.append(dato1)
+                    dato_concatenado.clear()
             else:
                 registro.append(dato)
         
