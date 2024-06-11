@@ -136,12 +136,12 @@ lista_percentil80_columna_10=[]
 for numRegistro in range(tamPercentil_70,tamPercentil_80):
     lista_percentil80_columna_10.append(lista_ordenada[numRegistro])
 
-print(tabulate(lista_percentil80_columna_10, headers="firstrow", tablefmt="grid"))
+#print(tabulate(lista_percentil80_columna_10, headers="firstrow", tablefmt="grid"))
 
 
 #print(lista_ordenada[numRegistro])
-print(int(len(lista_ordenada)))
-print()
+# print(int(len(lista_ordenada)))
+# print()
 
 
 
